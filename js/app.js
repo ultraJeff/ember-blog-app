@@ -13,12 +13,26 @@ App.Router.map(function() {
 App.PostsRoute = Ember.Route.extend({
 	model: function() {
 		return posts;
+		//callback=? returns JSONP
+		//$.getJSON returns a promise object
+		/*return $.getJSON('http://jefrfranklin.com/api/get_recent_posts/?callback=?').then(function(data) {
+			return data.posts.map(function(post) {
+				//Aliasing content property from server to body property in template
+				//Need to investigate this aspect further
+				post.body = post.content;
+				return post;
+			});
+		});*/
 	}
 });
 
 App.PostRoute = Ember.Route.extend({
 	model: function(params) {
 		return posts.findBy('id', params.post_id);
+		/*return $.getJSON('http://jefrfranklin.com/api/get_post/?id=' + params.post_id + '&callback=?').then(function(data) {
+			data.post.body = data.post.content;
+			return data.post;
+		});*/
 	}
 });
 
@@ -62,5 +76,5 @@ var posts = [{
   	author: { name: "d2h" },
   	date: new Date('12-24-2012'),
   	excerpt: "My [appearance on the Ruby Rogues podcast](http://rubyrogues.com/056-rr-david-heinemeier-hansson/) recently came up for discussion again on the private Parley mailing list.",
-  	body: "A long list of topics were raised and I took a time to ramble at large about all of them at once. Apologies for not taking the time to be more succinct, but at least each topic has a header so you can skip stuff you don't care about.\n\n### Maintainability\n\nIt's simply not true to say that I don't care about maintainability. I still work on the oldest Rails app in the world."
+  	body: "A long list of topics were raised and I took a time to ramble at large about all of them at once. **Apologies** for not taking the time to be more succinct, but at least each topic has a header so you can skip stuff you don't care about.\n\n### Maintainability\n\nIt's simply not true to say that I don't care about maintainability. I still work on the oldest Rails app in the world."
 }]
