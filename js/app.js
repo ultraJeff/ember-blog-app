@@ -36,6 +36,17 @@ App.PostController = Ember.ObjectController.extend({
 	}
 });
 
+Ember.Handlebars.helper('format-date', function(date) {
+	return moment(date).fromNow();
+});
+
+var showdown = new Showdown.converter();
+
+Ember.Handlebars.helper('format-markdown', function(input) {
+	//SafeString removes XSS encoding that Handlebars does automatically with
+	return new Ember.Handlebars.SafeString(showdown.makeHtml(input));
+});
+
 var posts = [{
 	id: '1',
 	title: 'Ember.js is pretty sweet',
